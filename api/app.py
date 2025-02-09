@@ -1,4 +1,5 @@
 import os
+import requests
 from flask import Flask, request, jsonify
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -44,9 +45,33 @@ def analyze_name():
         # Extract the analysis from the response
         analysis = response.choices[0].message.content
         
+        # Initialize domains list
+        domains = []
+        
+        # Try to get domain suggestions
+        try:
+            url = "https://domainr.p.rapidapi.com/v2/search"
+            querystring = {
+                "query": name,
+                "registrar": "dnsimple.com"
+            }
+            headers = {
+                "x-rapidapi-key": os.environ.get("RAPIDAPI_KEY"),
+                "x-rapidapi-host": "domainr.p.rapidapi.com"
+            }
+            
+            domain_response = requests.get(url, headers=headers, params=querystring)
+            if domain_response.ok:
+                domains = domain_response.json().get('results', [])
+        except Exception as domain_error:
+            print(f"Domain check error: {str(domain_error)}")
+            # Continue without domain results if there's an error
+            pass
+        
         return jsonify({
             'name': name,
-            'analysis': analysis
+            'analysis': analysis,
+            'domains': domains
         })
         
     except Exception as e:
