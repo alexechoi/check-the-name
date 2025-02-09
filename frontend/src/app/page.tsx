@@ -82,7 +82,7 @@ export default function Home() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your brand name"
-              className="flex-1 px-4 py-2 rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 text-base transition-all duration-200 placeholder:text-slate-500"
+              className="flex-1 px-4 py-2 rounded-md border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 text-black transition-all duration-200 placeholder:text-black-500"
               onKeyPress={(e) => e.key === 'Enter' && analyzeName()}
             />
             <button
