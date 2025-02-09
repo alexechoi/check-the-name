@@ -27,11 +27,12 @@ def analyze_name():
     try:
         # Create the prompt for analyzing name connotations
         prompt = f"""Please analyze the connotations, cultural significance, and potential implications of the name '{name}'. Consider:
-1. Cultural meanings across different regions
-2. Historical significance
-3. Potential positive and negative associations
-4. Similar sounding words or names
-5. Overall impression and suitability as a brand name"""
+        1. Whether or not there is a meaning/connotation of the word that could be an embarassing blunder
+        2. Cultural meanings across different geographies
+        3  Historical significance of any terms or words associated with the name
+        4. Potential positive and negative associations
+        5. Similar sounding words or names
+        6. Overall impression and suitability as a brand name"""
 
         # Call OpenAI API
         response = client.chat.completions.create(
