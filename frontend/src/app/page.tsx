@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import ReactMarkdown from 'react-markdown';
+import remarkBreaks from 'remark-breaks';
+import remarkGfm from 'remark-gfm';
 
 export default function Home() {
   const [name, setName] = useState('');
@@ -105,11 +108,20 @@ export default function Home() {
           >
             <h2 className="text-2xl font-semibold mb-6 text-slate-900 dark:text-white">Analysis Results</h2>
             <div className="prose prose-slate dark:prose-invert max-w-none">
-              {analysis.split('\n').map((paragraph, index) => (
-                <p key={index} className="mb-4 text-slate-700 dark:text-slate-200 text-lg leading-relaxed">
-                  {paragraph}
-                </p>
-              ))}
+              <ReactMarkdown
+                className="text-slate-700 dark:text-slate-200 text-lg leading-relaxed"
+                components={{
+                  p: ({ children }) => <p className="mb-4">{children}</p>,
+                  strong: ({ children }) => <span className="font-semibold">{children}</span>,
+                  em: ({ children }) => <span className="italic">{children}</span>,
+                  ul: ({ children }) => <ul className="list-disc pl-6 mb-4">{children}</ul>,
+                  ol: ({ children }) => <ol className="list-decimal pl-6 mb-4">{children}</ol>,
+                  li: ({ children }) => <li className="mb-2">{children}</li>
+                }}
+                remarkPlugins={[remarkBreaks, remarkGfm]}
+              >
+                {analysis}
+              </ReactMarkdown>
             </div>
           </motion.div>
         )}
